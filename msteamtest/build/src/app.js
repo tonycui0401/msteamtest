@@ -38,7 +38,7 @@ const AuthBot_1 = require("./AuthBot");
 let app = express();
 
 app.set("port", process.env.PORT || 3978);
-console.log(app.get("port"));
+console.log(process.env.PORT);
 app.use(express.static(path.join(__dirname, "../../public")));
 app.use(favicon(path.join(__dirname, "../../public/assets", "favicon.ico")));
 app.use(bodyParser.json());
@@ -47,7 +47,7 @@ let handlebars = exphbs.create({
 });
 app.engine("hbs", handlebars.engine);
 app.set("view engine", "hbs");
-// Configure storage
+// Configure storage;
 // let botStorageProvider = config.get("storage");
 // let botStorage = null;
 // switch (botStorageProvider) {
@@ -61,47 +61,47 @@ app.set("view engine", "hbs");
 //         botStorage = new storage.NullBotStorage();
 //         break;
 // }
-// // Create chat bot
-// let connector = new msteams.TeamsChatConnector({
-//     appId: config.get("bot.appId"),
-//     appPassword: config.get("bot.appPassword"),
-// });
-// let botSettings = {
-//     storage: botStorage,
-//     linkedIn: new providers.LinkedInProvider(config.get("linkedIn.clientId"), config.get("linkedIn.clientSecret")),
-//     azureADv1: new providers.AzureADv1Provider(config.get("azureAD.appId"), config.get("azureAD.appPassword")),
-//     google: new providers.GoogleProvider(config.get("google.clientId"), config.get("google.clientSecret")),
-// };
-// let bot = new AuthBot_1.AuthBot(connector, botSettings, app);
-// // Log bot errors
-// bot.on("error", (error) => {
-//     winston.error(error.message, error);
-// });
-// // Configure bot routes
-// app.post("/api/messages", connector.listen());
-// // Configure auth routes
-// app.get("/auth/:provider/callback", (req, res) => {
-//     bot.handleOAuthCallback(req, res, req.params["provider"]);
-// });
-// // Configure ping route
-// app.get("/ping", (req, res) => {
-//     res.status(200).send("OK");
-// });
-// // error handlers
-// // development error handler
-// // will print stacktrace
-// if (app.get("env") === "development") {
-//     app.use(function (err, req, res, next) {
-//         winston.error("Failed request", err);
-//         res.send(err.status || 500, err);
-//     });
-// }
-// // production error handler
-// // no stacktraces leaked to user
-// app.use(function (err, req, res, next) {
-//     winston.error("Failed request", err);
-//     res.sendStatus(err.status || 500);
-// });
+// Create chat bot
+let connector = new msteams.TeamsChatConnector({
+    appId: config.get("bot.appId"),
+    appPassword: config.get("bot.appPassword"),
+});
+let botSettings = {
+    storage: botStorage,
+    linkedIn: new providers.LinkedInProvider(config.get("linkedIn.clientId"), config.get("linkedIn.clientSecret")),
+    azureADv1: new providers.AzureADv1Provider(config.get("azureAD.appId"), config.get("azureAD.appPassword")),
+    google: new providers.GoogleProvider(config.get("google.clientId"), config.get("google.clientSecret")),
+};
+let bot = new AuthBot_1.AuthBot(connector, botSettings, app);
+// Log bot errors
+bot.on("error", (error) => {
+    winston.error(error.message, error);
+});
+// Configure bot routes
+app.post("/api/messages", connector.listen());
+// Configure auth routes
+app.get("/auth/:provider/callback", (req, res) => {
+    bot.handleOAuthCallback(req, res, req.params["provider"]);
+});
+// Configure ping route
+app.get("/ping", (req, res) => {
+    res.status(200).send("OK");
+});
+// error handlers
+// development error handler
+// will print stacktrace
+if (app.get("env") === "development") {
+    app.use(function (err, req, res, next) {
+        winston.error("Failed request", err);
+        res.send(err.status || 500, err);
+    });
+}
+// production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+    winston.error("Failed request", err);
+    res.sendStatus(err.status || 500);
+});
 http.createServer(app).listen(app.get("port"), function () {
     winston.verbose("Express server listening on port " + app.get("port"));
 });
