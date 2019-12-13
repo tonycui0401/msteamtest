@@ -2,7 +2,7 @@
 
 :: ----------------------
 :: KUDU Deployment Script
-:: Version: 1.0.9
+:: Version: 1.0.17
 :: ----------------------
 
 :: Prerequisites
@@ -97,22 +97,10 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 :: 2. Select node version
 call :SelectNodeVersion
 
-:: 3. Install npm packages (including dev dependencies)
+:: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
-  echo Running npm install of production dependencies!
-  call :ExecuteCmd !NPM_CMD! install --only=prod
-  echo Running npm install of dev dependencies.
-  call :ExecuteCmd !NPM_CMD! install --only=dev
-  IF !ERRORLEVEL! NEQ 0 goto error
-  popd
-)
-
-:: 5. Run gulp transformations
-IF EXIST "%DEPLOYMENT_TARGET%\gulpfile.js" (
-  echo Running gulp build.
-  pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd .\node_modules\.bin\gulp build
+  call :ExecuteCmd !NPM_CMD! install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
