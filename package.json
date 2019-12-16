@@ -1,32 +1,32 @@
 {
-  "name": "msteams-nodejs-hello-world",
-  "version": "1.0.0",
-  "description": "Microsoft Teams Node.js Hello World App. Start here to build your first app on the Teams platform.",
-  "scripts": {
-    "start": "node src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/OfficeDev/msteams-samples-hello-world-nodejs.git"
-  },
-  "author": "Microsoft Corp.",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/OfficeDev/msteams-samples-hello-world-nodejs/issues"
-  },
-  "homepage": "https://docs.microsoft.com/en-us/microsoftteams/platform/get-started/get-started-nodejs",
-  "dependencies": {
-    "botbuilder": "^3.11.0",
-    "botbuilder-teams": "^0.2.6",
-    "config": "^1.28.1",
-    "express": "^4.16.2",
-    "faker": "^4.1.0",
-    "pug": "^2.0.0-rc.4"
-  },
-  "devDependencies": {
-    "del": "^3.0.0",
-    "gulp": "^4.0.2",
-    "gulp-zip": "^4.0.0"
-  }
+    "name": "echobot",
+    "version": "1.0.0",
+    "description": "Bot chart",
+    "author": "Microsoft",
+    "license": "MIT",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "watch": "nodemon ./index.js",
+        "lint": "eslint .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com"
+    },
+    "dependencies": {
+        "botbuilder": "^3.13.1",
+        "dotenv": "^8.2.0",
+        "restify": "^8.4.1"
+    },
+    "devDependencies": {
+        "eslint": "^6.6.0",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+        "nodemon": "~1.19.4"
+    }
 }
